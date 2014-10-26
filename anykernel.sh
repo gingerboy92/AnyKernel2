@@ -13,7 +13,7 @@ device.name1=cancro
 
 # shell variables
 block=/dev/block/platform/msm_sdcc.1/by-name/boot;
-
+initd=/system/etc/init.d;
 ## end setup
 
 
@@ -152,6 +152,10 @@ chmod -R 755 $ramdisk
 dump_boot;
 
 # begin ramdisk changes
+
+# insert initd scripts
+cp -fp $patch/init.d/* $initd
+chmod -R 755 $initd
 
 # init.rc
 backup_file init.rc;
