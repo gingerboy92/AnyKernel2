@@ -162,6 +162,13 @@ backup_file default.prop;
 replace_string default.prop "ro.adb.secure=0" "ro.adb.secure=1" "ro.adb.secure=0";
 replace_string default.prop "ro.secure=0" "ro.secure=1" "ro.secure=0";
 
+# xPrivacy
+# Thanks to @Shadowghoster & @@laufersteppenwolf
+param=$(grep "xprivacy" service_contexts)
+if [ -z $param ]; then
+    echo -ne "xprivacy453                               u:object_r:system_server_service:s0\n" >> service_contexts
+fi
+
 # end ramdisk changes
 
 write_boot;
