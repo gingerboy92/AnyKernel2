@@ -3,19 +3,16 @@
 
 ## AnyKernel setup
 # EDIFY properties
-kernel.string=DirtyV by bsmitty83 @ xda-developers
+kernel.string=StellAr Kernel
+message=Version 4 KhUkHaKh-Blank
 do.devicecheck=1
 do.initd=1
-do.modules=0
+do.modules=1
 do.cleanup=1
-device.name1=maguro
-device.name2=toro
-device.name3=toroplus
-device.name4=
-device.name5=
+device.name1=cancro
 
 # shell variables
-block=/dev/block/platform/omap/omap_hsmmc.0/by-name/boot;
+block=/dev/block/platform/msm_sdcc.1/by-name/boot;
 
 ## end setup
 
@@ -162,11 +159,6 @@ backup_file init.rc;
 replace_string init.rc "cpuctl cpu,timer_slack" "mount cgroup none /dev/cpuctl cpu" "mount cgroup none /dev/cpuctl cpu,timer_slack";
 append_file init.rc "run-parts" init;
 
-# init.tuna.rc
-backup_file init.tuna.rc;
-insert_line init.tuna.rc "nodiratime barrier=0" after "mount_all /fstab.tuna" "\tmount ext4 /dev/block/platform/omap/omap_hsmmc.0/by-name/userdata /data remount nosuid nodev noatime nodiratime barrier=0\n";
-append_file init.tuna.rc "dvbootscript" init.tuna;
-
 # init.superuser.rc
 if [ -f init.superuser.rc ]; then
   backup_file init.superuser.rc;
@@ -176,13 +168,6 @@ else
   replace_file init.superuser.rc 750 init.superuser.rc;
   insert_line init.rc "init.superuser.rc" after "on post-fs-data" "    import /init.superuser.rc\n";
 fi;
-
-# fstab.tuna
-backup_file fstab.tuna;
-replace_line fstab.tuna "/by-name/system" "/dev/block/platform/omap/omap_hsmmc.0/by-name/system    /system             ext4      nodev,noatime,nodiratime,barrier=0,data=writeback,noauto_da_alloc,discard    wait";
-replace_line fstab.tuna "/by-name/cache" "/dev/block/platform/omap/omap_hsmmc.0/by-name/cache     /cache              ext4      nosuid,nodev,noatime,nodiratime,errors=panic,barrier=0,nomblk_io_submit,data=writeback,noauto_da_alloc    wait,check";
-replace_line fstab.tuna "/by-name/userdata" "/dev/block/platform/omap/omap_hsmmc.0/by-name/userdata  /data               ext4      nosuid,nodev,noatime,errors=panic,nomblk_io_submit,data=writeback,noauto_da_alloc    wait,check,encryptable=/dev/block/platform/omap/omap_hsmmc.0/by-name/metadata";
-append_file fstab.tuna "usbdisk" fstab;
 
 # end ramdisk changes
 
