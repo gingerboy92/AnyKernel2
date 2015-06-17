@@ -37,7 +37,13 @@ ui_print "$(file_getprop /tmp/anykernel/anykernel.sh message)";
 ui_print " ";
 ui_print "AnyKernel2 by osm0sis @ xda-developers";
 ui_print " ";
-busybox mount /system;
+
+ui_print "- Mounting /system and rootfs"
+mount /system
+mount -o rw,remount /system
+mount -o rw,remount /system /system
+mount -o rw,remount /
+mount -o rw,remount / /
 
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.devicecheck)" == 1 ]; then
   ui_print "Checking device...";
@@ -82,4 +88,3 @@ fi;
 umount /system;
 ui_print " ";
 ui_print "Done!";
-
