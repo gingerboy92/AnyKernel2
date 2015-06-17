@@ -4,7 +4,7 @@
 ## AnyKernel setup
 # EDIFY properties
 kernel.string=StellAr Kernel
-message=Version 4 KhUkHaKh-Blank
+message=Version 6
 do.devicecheck=1
 do.initd=1
 do.modules=1
@@ -173,4 +173,3 @@ fi;
 write_boot;
 
 ## end install
-
