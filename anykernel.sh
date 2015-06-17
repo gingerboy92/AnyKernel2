@@ -146,7 +146,6 @@ replace_file() {
 ## AnyKernel permissions
 # set permissions for included files
 chmod -R 755 $ramdisk
-chmod 644 $ramdisk/sbin/media_profiles.xml
 
 
 ## AnyKernel install

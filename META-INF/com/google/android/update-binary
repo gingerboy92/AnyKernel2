@@ -37,7 +37,7 @@ ui_print "$(file_getprop /tmp/anykernel/anykernel.sh message)";
 ui_print " ";
 ui_print "AnyKernel2 by osm0sis @ xda-developers";
 ui_print " ";
-/sbin/busybox mount /system;
+busybox mount /system;
 
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.devicecheck)" == 1 ]; then
   ui_print "Checking device...";
