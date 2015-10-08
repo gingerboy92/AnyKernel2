@@ -61,6 +61,7 @@ write_boot() {
   if [ -f /tmp/anykernel/zImage ]; then
     kernel=/tmp/anykernel/zImage;
   else
+    ui_print " "; ui_print "kernel not found.. using fallback kernel";
     kernel=`ls *-zImage`;
     kernel=$split_img/$kernel;
   fi;
