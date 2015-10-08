@@ -1,11 +1,12 @@
 #!/system/bin/sh
 #
-# AK Tuning
-# @anarkia1976
+# Originally made by @anarkia1976
+#	Modified for Xiaomi Mi 3 by @gingerboy92
 #
 
-# initialize ak
-echo "[ak kernel] initialize boot script" | tee /dev/kmsg
+
+# initialize
+echo "[Stellar Kernel] initialize boot script" | tee /dev/kmsg
 
 # disable debugging on some modules
 echo "0" > /sys/module/kernel/parameters/initcall_debug;
