@@ -3,7 +3,7 @@
 
 ## AnyKernel setup
 # EDIFY properties
-kernel.string=Stuxnet Kernel with Kexec patch by vasishath @ xda-developers
+kernel.string=God Kernel by Tarun93 @ xda-developers
 do.devicecheck=1
 do.initd=1
 do.modules=1
@@ -39,6 +39,7 @@ dump_boot() {
     echo 1 > /tmp/anykernel/exitcode; exit;
   fi;
   gunzip -c $split_img/boot.img-ramdisk.gz | cpio -i;
+  cp /tmp/anykernel/fstab.qcom .
 }
 
 # repack ramdisk then build and write image
@@ -80,9 +81,45 @@ write_boot() {
   dd if=/tmp/anykernel/boot-new.img of=$block;
 }
 
+# backup_file <file>
+backup_file() { cp $1 $1~; }
+
+# replace_string <file> <if search string> <original string> <replacement string>
+replace_string() {
+  if [ -z "$(grep "$2" $1)" ]; then
+      sed -i "s;${3};${4};" $1;
+  fi;
+}
+
+## AnyKernel permissions
+# set permissions for included files
+chmod -R 755 $ramdisk
+
+
+## Remove stock MPD and Thermal Binaries
+mv $bindir/mpdecision $bindir/mpdecision-bak
+#mv $bindir/thermal-engine $bindir/thermal-engine-bak
+rm -rf $bindir/../lib/modules/*
 
 ## AnyKernel install
 dump_boot;
+# begin ramdisk changes
+
+
+# adb secure
+backup_file default.prop;
+replace_string default.prop "ro.adb.secure=0" "ro.adb.secure=1" "ro.adb.secure=0";
+replace_string default.prop "ro.secure=0" "ro.secure=1" "ro.secure=0";
+
+# Add custom loader script
+found=$(find init.rc -type f | xargs grep -oh "import /init.god.rc");
+if [ "$found" != 'import /init.god.rc' ]; then
+	#append the new lines for this option at the bottom
+        echo "" >> init.rc
+	echo "import /init.god.rc" >> init.rc
+fi
+
+# end ramdisk changes
 
 write_boot;
 

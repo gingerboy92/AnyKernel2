@@ -29,21 +29,25 @@ show_progress 1.34 4;
 ui_print " ";
 mkdir -p /tmp/anykernel;
 cd /tmp/anykernel;
-unzip -o $ZIP;
+unzip -o "$ZIP";
 
 ui_print "$(file_getprop /tmp/anykernel/anykernel.sh kernel.string)";
 ui_print " ";
-ui_print "$(file_getprop /tmp/anykernel/anykernel.sh message)";
 ui_print " ";
 ui_print "AnyKernel2 by osm0sis @ xda-developers";
+ui_print "God's Kernel by Tarun93 @ xda-developers";
+ui_print "  ";
+ui_print "  ";
+ui_print "######################################";
+ui_print "############ GOD'S KERNEL ############";
+ui_print "################# R2 #################";
+ui_print "######################################";
+ui_print "Compatible with All CM AOSP based ROM";
+ui_print "          and MIUI Roms              ";
+ui_print " ";
 ui_print " ";
 
-ui_print "- Mounting /system and rootfs"
-mount /system
-mount -o rw,remount /system
-mount -o rw,remount /system /system
-mount -o rw,remount /
-mount -o rw,remount / /
+/sbin/busybox mount /system;
 
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.devicecheck)" == 1 ]; then
   ui_print "Checking device...";
@@ -88,3 +92,4 @@ fi;
 umount /system;
 ui_print " ";
 ui_print "Done!";
+
