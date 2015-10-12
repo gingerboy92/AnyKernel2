@@ -92,6 +92,38 @@ stop mpdecision
 #echo "9472,13824,19968,44544,58368,65536" > /sys/module/lowmemorykiller/parameters/minfree 
 #echo "3" > sys/kernel/power_suspend/power_suspend_mode
 
+# Enable ZRAM
+modprobe zram num_devices=4
+echo "4" > /sys/block/zram0/max_comp_streams
+echo "4" > /sys/block/zram1/max_comp_streams
+echo "4" > /sys/block/zram2/max_comp_streams
+echo "4" > /sys/block/zram3/max_comp_streams
+echo "lz4" > /sys/block/zram0/comp_algorithm
+echo "1" > /sys/block/zram0/reset
+echo "1" > /sys/block/zram1/reset
+echo "1" > /sys/block/zram2/reset
+echo "1" > /sys/block/zram3/reset
+echo "134217728" > /sys/block/zram0/disksize
+echo "134217728" > /sys/block/zram1/disksize
+echo "134217728" > /sys/block/zram2/disksize
+echo "134217728" > /sys/block/zram3/disksize
+mkswap /dev/block/zram0
+mkswap /dev/block/zram1
+mkswap /dev/block/zram2
+mkswap /dev/block/zram3
+swapon -p 10 /dev/block/zram0
+swapon -p 10 /dev/block/zram1
+swapon -p 10 /dev/block/zram2
+swapon -p 10 /dev/block/zram3
+
+# KSM options
+echo "256" > /sys/kernel/mm/ksm/pages_to_scan
+echo "1500" > /sys/kernel/mm/ksm/sleep_millisecs
+echo "1" > /sys/kernel/mm/ksm/deferred_timer
+echo "1" > /sys/kernel/mm/ksm/run
+	#lock ksm from changing... to lazy to find out the cause :P
+	chmod 0444 /sys/kernel/mm/ksm/sleep_millisecs
+	chmod 0444 /sys/kernel/mm/ksm/pages_to_scan
 
 ########################################################
 # Scheduler and Read Ahead
@@ -117,7 +149,8 @@ echo "32" > /sys/module/lowmemorykiller/parameters/cost
 echo "200" > /proc/sys/vm/dirty_expire_centisecs
 echo "40" > /proc/sys/vm/dirty_ratio
 echo "5" > /proc/sys/vm/dirty_background_ratio
-echo "0" > /proc/sys/vm/swappiness
+echo "100" > /proc/sys/vm/swappiness
+echo "0" > /proc/sys/vm/page-cluster
 
 ########################################################
 # Dynamic FSync (Let User Decide)
