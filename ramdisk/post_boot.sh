@@ -125,6 +125,34 @@ echo "1" > /sys/kernel/mm/ksm/run
 	chmod 0444 /sys/kernel/mm/ksm/sleep_millisecs
 	chmod 0444 /sys/kernel/mm/ksm/pages_to_scan
 
+############################
+# MSM-Limiter Freq Tuning
+#
+echo 2803200 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+echo 2803200 > /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq
+echo 2803200 > /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq
+echo 2803200 > /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq
+echo 300000 > /sys/kernel/msm_limiter/suspend_min_freq_0
+echo 300000 > /sys/kernel/msm_limiter/suspend_min_freq_1
+echo 300000 > /sys/kernel/msm_limiter/suspend_min_freq_2
+echo 300000 > /sys/kernel/msm_limiter/suspend_min_freq_3
+echo 2803200 > /sys/kernel/msm_limiter/resume_max_freq_0
+echo 2803200 > /sys/kernel/msm_limiter/resume_max_freq_1
+echo 2803200 > /sys/kernel/msm_limiter/resume_max_freq_2
+echo 2803200 > /sys/kernel/msm_limiter/resume_max_freq_3
+echo 2803200 > /sys/kernel/msm_limiter/live_max_freq_0
+echo 2803200 > /sys/kernel/msm_limiter/live_max_freq_1
+echo 2803200 > /sys/kernel/msm_limiter/live_max_freq_2
+echo 2803200 > /sys/kernel/msm_limiter/live_max_freq_3
+echo 1267200 > /sys/kernel/msm_limiter/suspend_max_freq
+echo interactive > /sys/kernel/msm_limiter/scaling_governor_0
+echo interactive > /sys/kernel/msm_limiter/scaling_governor_1
+echo interactive > /sys/kernel/msm_limiter/scaling_governor_2
+echo interactive > /sys/kernel/msm_limiter/scaling_governor_3
+
+# Adreno idler
+#adreno_idler
+
 ########################################################
 # Scheduler and Read Ahead
 #
