@@ -13,6 +13,7 @@ on property:init.svc.bootanim=stopped
 #    write /sys/kernel/msm_thermal/high_thresh "1190400 52 48"
 #    write /sys/kernel/msm_thermal/sampling_ms 10000
 #    write /sys/kernel/msm_thermal/enabled 1
+	 stop mpdecision
     
 # Call Post-init script
 service Post-init /post_boot.sh
