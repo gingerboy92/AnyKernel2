@@ -79,6 +79,8 @@ if [ "$(cat /tmp/anykernel/exitcode)" == 1 ]; then
 fi;
 
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.modules)" == 1 ]; then
+  ui_print "Removing original modules...";
+  rm -rf /system/lib/modules/*;
   ui_print "Pushing modules...";
   ui_print " ";
   cp -f /tmp/anykernel/modules/* /system/lib/modules/;
