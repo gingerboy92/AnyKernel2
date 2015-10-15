@@ -168,7 +168,8 @@ echo 512 > /sys/block/mmcblk0/bdi/read_ahead_kb
 ########################################################
 # LMK Tweaks
 #
-echo "2560,4096,8192,16384,24576,32768" > /sys/module/lowmemorykiller/parameters/minfree
+
+#echo "2560,4096,8192,16384,24576,32768" > /sys/module/lowmemorykiller/parameters/minfree
 echo "32" > /sys/module/lowmemorykiller/parameters/cost
 
 ########################################################
