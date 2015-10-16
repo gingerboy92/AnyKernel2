@@ -112,11 +112,11 @@ replace_string default.prop "ro.adb.secure=0" "ro.adb.secure=1" "ro.adb.secure=0
 replace_string default.prop "ro.secure=0" "ro.secure=1" "ro.secure=0";
 
 # Add custom loader script
-found=$(find init.rc -type f | xargs grep -oh "import /init.god.rc");
-if [ "$found" != 'import /init.god.rc' ]; then
+found=$(find init.rc -type f | xargs grep -oh "import /init.custom.rc");
+if [ "$found" != 'import /init.custom.rc' ]; then
 	#append the new lines for this option at the bottom
         echo "" >> init.rc
-	echo "import /init.god.rc" >> init.rc
+	echo "import /init.custom.rc" >> init.rc
 fi
 
 # end ramdisk changes
