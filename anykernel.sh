@@ -3,7 +3,7 @@
 
 ## AnyKernel setup
 # EDIFY properties
-kernel.string=God Kernel by Tarun93 @ xda-developers
+kernel.string=Custom kernel by ForNowItCouldBeAnyBody @ xda-developers
 do.devicecheck=1
 do.initd=1
 do.modules=1
