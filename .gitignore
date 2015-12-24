@@ -1,5 +1,2 @@
 *.orig
-*.sh
-kernel/hz.bc
-zip/
 *.zip
