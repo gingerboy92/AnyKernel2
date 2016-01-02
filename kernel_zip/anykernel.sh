@@ -172,16 +172,6 @@ chmod 755 /system/etc/init.qcom.post_boot.sh
 #  backup_file fstab.qcom;
 #  replace_file fstab.qcom 644 fstab.qcom;
 
-# init.superuser.rc
-#if [ -f init.superuser.rc ]; then
-#  backup_file init.superuser.rc;
-#  replace_string init.superuser.rc "Superuser su_daemon" "# su daemon" "\n# Superuser su_daemon";
-#  prepend_file init.superuser.rc "SuperSU daemonsu" init.superuser;
-#else
-#  replace_file init.superuser.rc 750 init.superuser.rc;
-#  insert_line init.rc "init.superuser.rc" after "on post-fs-data" "    import /init.superuser.rc\n";
-#fi
-
 # adb secure
 backup_file default.prop;
 replace_string default.prop "ro.adb.secure=0" "ro.adb.secure=1" "ro.adb.secure=0";
