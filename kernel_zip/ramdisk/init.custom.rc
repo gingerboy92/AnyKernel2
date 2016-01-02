@@ -1,9 +1,8 @@
 on boot
-setprop persist.usb.hvdcp.detect true
-write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 2265600
-write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 2265600
-write /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq 2265600
-write /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq 2265600
+    setprop persist.usb.hvdcp.detect true
+
+    chown system system /dev/cpuctl/cpu.notify_on_migrate
+    chmod 0664 /dev/cpuctl/cpu.notify_on_migrate
 
 on property:init.svc.bootanim=stopped
     # Set light thermal restrictions while optimizing apps
@@ -17,23 +16,26 @@ on property:init.svc.bootanim=stopped
 
 on property:sys.boot_completed=1
 
-    #mmc
-    #write /sys/class/mmc_host/mmcX/clk_scaling/scale_down_in_low_wr_load 1
-
     #cpufreq
     write /sys/kernel/msm_thermal/enabled 0
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "interactive"
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1958400
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 1958400
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq 1958400
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq 1958400
     write /dev/cpuctl/cpu.notify_on_migrate 1
     write /sys/kernel/msm_thermal/enabled 1
 
+    #intelli_plug
+    #write /sys/module/intelli_plug/parameters/intelli_plug_nr_run_profile_sel 1
     #cpu_input
-    write /sys/kernel/cpu_input_boost/ib_freqs "1190400 1190400"
-    write /sys/kernel/cpu_input_boost/ib_duration_ms 1400
-    write /sys/kernel/cpu_input_boost/enabled 1
+    #write /sys/kernel/cpu_input_boost/ib_freqs "1190400 1190400"
+    #write /sys/kernel/cpu_input_boost/ib_duration_ms 1400
+    #write /sys/kernel/cpu_input_boost/enabled 1
+
+    # cpu_boost
+    #write /sys/module/cpu_boost/parameters/input_boost_freq "0:1267200 1:1267200 2:1267200 3:1267200"
+    #write /sys/module/cpu_boost/parameters/input_boost_ms "500"
+    #write /sys/module/cpu_boost/parameters/hotplug_boost "1"
+    #write /sys/module/cpu_boost/parameters/wakeup_boost "1"
+    #write /sys/module/cpu_boost/parameters/boost_ms "40"
+    #write /sys/module/cpu_boost/parameters/sync_threshold "119400"
 
     # Adaptive LMK
     write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1

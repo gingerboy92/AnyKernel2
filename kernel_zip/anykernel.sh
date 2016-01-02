@@ -50,10 +50,10 @@ dump_boot() {
 write_boot() {
   cd $split_img;
   cmdline=`cat *-cmdline`;
-  found=$(find *-cmdline -type f | xargs grep -oh "androidboot.selinux=permissive");
-  if [ "$found" != 'androidboot.selinux=permissive' ]; then
-  cmdline="$cmdline androidboot.selinux=permissive";
-  fi
+  #found=$(find *-cmdline -type f | xargs grep -oh "androidboot.selinux=permissive");
+  #if [ "$found" != 'androidboot.selinux=permissive' ]; then
+  #cmdline="$cmdline androidboot.selinux=permissive";
+  #fi
   board=`cat *-board`;
   base=`cat *-base`;
   pagesize=`cat *-pagesize`;
@@ -156,8 +156,8 @@ replace_file() {
 chmod -R 755 $ramdisk
 
 ## Remove stock MPD and Thermal Binaries
-mv $bindir/mpdecision $bindir/mpdecision-bak
-mv $bindir/thermal-engine $bindir/thermal-engine-bak
+#mv $bindir/mpdecision $bindir/mpdecision-bak
+#mv $bindir/thermal-engine $bindir/thermal-engine-bak
 rm -rf $bindir/../lib/modules/*
 
 ## AnyKernel install
@@ -168,32 +168,19 @@ cp -fp $patch/* /system/etc/
 chmod 755 /system/etc/init.qcom.post_boot.sh
 
 #replace fstab
-ui_print() " ";ui_print() "Replacing fstab..........";
-  backup_file fstab.qcom;
-  replace_file fstab.qcom 644 fstab.qcom;
+#ui_print() " ";ui_print() "Replacing fstab..........";
+#  backup_file fstab.qcom;
+#  replace_file fstab.qcom 644 fstab.qcom;
 
 # init.superuser.rc
-if [ -f init.superuser.rc ]; then
-  backup_file init.superuser.rc;
-  replace_string init.superuser.rc "Superuser su_daemon" "# su daemon" "\n# Superuser su_daemon";
-  prepend_file init.superuser.rc "SuperSU daemonsu" init.superuser;
-else
-  replace_file init.superuser.rc 750 init.superuser.rc;
-  insert_line init.rc "init.superuser.rc" after "on post-fs-data" "    import /init.superuser.rc\n";
-fi
-
-# add gsiff sepolicy
-backup_file file_contexts;
-found=$(find file_contexts -type f | xargs grep -oh "#TEMPSEPOLICY");
-if [ "$found" != '#TEMPSEPOLICY' ]; then
-  echo "" >> file_contexts
-  echo "#TEMPSEPOLICY" >> file_contexts
-  echo "/system/bin/gsiff_daemon u:object_r:system_file:s0" >> file_contexts
-  echo "#GPSnSensors"  >> file_contexts
-  echo "/dev/gss u:object_r:sensors_device:s0" >> file_contexts
-  echo "/sns(/.*)?"   >> file_contexts
-  echo "u:object_r:sensors_persist_file:s0" >> file_contexts
-fi
+#if [ -f init.superuser.rc ]; then
+#  backup_file init.superuser.rc;
+#  replace_string init.superuser.rc "Superuser su_daemon" "# su daemon" "\n# Superuser su_daemon";
+#  prepend_file init.superuser.rc "SuperSU daemonsu" init.superuser;
+#else
+#  replace_file init.superuser.rc 750 init.superuser.rc;
+#  insert_line init.rc "init.superuser.rc" after "on post-fs-data" "    import /init.superuser.rc\n";
+#fi
 
 # adb secure
 backup_file default.prop;
@@ -201,11 +188,11 @@ replace_string default.prop "ro.adb.secure=0" "ro.adb.secure=1" "ro.adb.secure=0
 replace_string default.prop "ro.secure=0" "ro.secure=1" "ro.secure=0";
 
 # Add custom loader script
-found=$(find init.rc -type f | xargs grep -oh "import /init.god.rc");
-if [ "$found" != 'import /init.god.rc' ]; then
+found=$(find init.rc -type f | xargs grep -oh "import /init.custom.rc");
+if [ "$found" != 'import /init.custom.rc' ]; then
 	#append the new lines for this option at the bottom
         echo "" >> init.rc
-	echo "import /init.god.rc" >> init.rc
+	echo "import /init.custom.rc" >> init.rc
 fi
 
 # end ramdisk changes
