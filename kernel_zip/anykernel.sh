@@ -5,8 +5,8 @@ kj# AnyKernel 2.0 Ramdisk Mod Script
 # EDIFY properties
 kernel.string=God s Kernel by Tarun93 @ xda-developers
 do.devicecheck=1
-do.initd=0
-do.modules=0
+do.initd=1
+do.modules=1
 do.cleanup=1
 device.name1=cancro
 device.name2=cancro_wc_lte
@@ -156,9 +156,12 @@ replace_file() {
 chmod -R 755 $ramdisk
 
 ## Remove stock MPD and Thermal Binaries
-#mv $bindir/mpdecision $bindir/mpdecision-bak
+mv $bindir/mpdecision $bindir/mpdecision-bak
 #mv $bindir/thermal-engine $bindir/thermal-engine-bak
 rm -rf $bindir/../lib/modules/*
+
+# restore mpdecision! // use this if you decides to go back to mpdecision. don't forget to disable the one above first though....
+#mv $bindir/mpdecision-bak $bindir/mpdecision 
 
 ## AnyKernel install
 dump_boot;
