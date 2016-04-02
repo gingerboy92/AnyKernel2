@@ -21,7 +21,6 @@ set_perm_recursive() {
     find "$i" -type f -exec chmod $4 {} +;
   done;
 }
-
 file_getprop() { grep "^$2" "$1" | cut -d= -f2; }
 getprop() { test -e /sbin/getprop && /sbin/getprop $1 || file_getprop /default.prop $1; }
 abort() { ui_print "$*"; exit 1; }
@@ -35,11 +34,7 @@ unzip -o "$ZIP";
 ui_print "$(file_getprop /tmp/anykernel/anykernel.sh kernel.string)";
 ui_print " ";
 ui_print "AnyKernel2 by osm0sis @ xda-developers";
-ui_print "#######################################";
-ui_print "              NO ONE'S KERNEL          ";
-ui_print "                   FU                  ";
-ui_print "#######################################";
-ui_print "By FSAFSDSD"
+ui_print " ";
 /sbin/busybox mount /system;
 
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.devicecheck)" == 1 ]; then
@@ -65,8 +60,8 @@ if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.initd)" == 1 ]; then
 fi;
 
 ui_print "Installing kernel...";
-/sbin/sh /tmp/anykernel/anykernel.sh;
-if [ "$(cat /tmp/anykernel/exitcode)" == 1 ]; then 
+/sbin/sh /tmp/anykernel/anykernel.sh $2;
+if [ $? != "0" ]; then
   umount /system;
   abort;
 fi;
